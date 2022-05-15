@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -50,19 +51,27 @@ import './App.css';
 
 
 function App() {
+  
+  const [image, setImage] = useState(undefined);
 
   const getNewImageURL = async () => {
     const response = await fetch('https://dog.ceo/api/breeds/image/random');
     const data = await response.json();
-    console.log(data.message);
-
+    return data.message;
+    
   }
-
-  getNewImageURL();
-
+  
+  const setNewImage = async () => {
+    const newImage = await getNewImageURL();
+    console.log(newImage);
+    setImage(newImage);
+  } 
   return (
     <div className="App">
-      <p>test</p>
+      <div>
+        <button onClick={setNewImage}>Click me</button>
+      </div>
+      { image && <img src={image} alt="Dog"></img> }
     </div>
   );
 }
