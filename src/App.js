@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+
 import './App.css';
+import CatFacts from './Components/CatFacts';
+import Exchange from './Components/Exchange';
 
 
 // const myFetchCalls = async() => {
 //   try {
-//     const response = await fetch('https://cat-fact.hejijirokuapp.com/facts');
+//     const response = await fetch('https://cat-fact.herokuapp.com/facts');
 //     const data = await response.json();
   
 //     console.log(data);
@@ -50,17 +52,37 @@ import './App.css';
 //   // .catch(err => console.log("error = " + err));
 
 
-function App() {
+function App(props) {
   
   const [image, setImage] = useState(undefined);
 
   const getNewImageURL = async () => {
-    const response = await fetch('https://dog.ceo/api/breeds/image/random');
-    const data = await response.json();
-    return data.message;
+    try {
+      const response = await fetch('https://dog.ceo/api/breeds/image/random');
+      const data = await response.json();
+      return data.message;
+    } catch(e) {
+      console.log(e);
+    }
     
+    return undefined
+  
   }
   
+  useEffect( () => {
+    const fetchData = async () => {
+      const image = await getNewImageURL();
+      setImage(image);
+    }
+
+    fetchData();
+  }, [])
+
+  useEffect( () => {
+    console.log("Inside image use Effect");
+  }, [image]);
+
+
   const setNewImage = async () => {
     const newImage = await getNewImageURL();
     console.log(newImage);
@@ -68,10 +90,12 @@ function App() {
   } 
   return (
     <div className="App">
-      <div>
+      <Exchange />
+      {/* <CatFacts /> */}
+      {/* <div>
         <button onClick={setNewImage}>Click me</button>
       </div>
-      { image && <img src={image} alt="Dog"></img> }
+       { image && <img src={image} alt="Dog"></img> } */}
     </div>
   );
 }
