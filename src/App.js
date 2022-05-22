@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import CatFacts from './Components/CatFacts';
 import Exchange from './Components/Exchange';
-
+import Items from './Components/Items';
 
 // const myFetchCalls = async() => {
 //   try {
@@ -90,7 +90,8 @@ function App(props) {
   } 
   return (
     <div className="App">
-      <Exchange />
+      <Items />
+      {/* <Exchange /> */}
       {/* <CatFacts /> */}
       {/* <div>
         <button onClick={setNewImage}>Click me</button>
