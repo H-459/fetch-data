@@ -5,6 +5,11 @@ const SERVER_URL = "https://abra-course-server.herokuapp.com/";
 const Items = (props) => {
 
     const [accessToken, setAccessToken] = useState(undefined);
+
+    useEffect( () => {
+       setAccessToken(localStorage.getItem("Token"));
+    }, []);
+
     const login = async (username, password) => {
         
         const payload = {
@@ -70,9 +75,29 @@ const Items = (props) => {
         console.log(data);
     }
 
+    const createItem = async ( name ) => {
+
+        const payload = {
+            name
+        };
+        const response = await fetch(SERVER_URL + "items/",
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            },
+            method: "POST",
+            body: JSON.stringify(payload)
+        })
+
+        const data = await response.json();
+        console.log(data);
+
+    }
     const loginUser = async () => {
         const accessToken = await login("test3","@Q1w2e3r4");
         setAccessToken(accessToken);
+        localStorage.setItem("Token", accessToken);
         console.log(accessToken);
     }
     return (
@@ -80,6 +105,7 @@ const Items = (props) => {
         <button onClick={() => register("test3","@Q1w2e3r4","te3st@gmail.com","E","Z")}>Register</button>
         <button onClick={loginUser}>Login</button>
         <button onClick={getItems}>get Items</button>
+        <button onClick={() => createItem("My new item")}>Create item</button>
         { accessToken && <p>Your acccess token : {accessToken}</p>}
         </>
     )
