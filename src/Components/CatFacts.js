@@ -33,7 +33,7 @@ const CatFacts = (props) => {
     useEffect(() => {
         getCatFacts().then(data => {
             setFacts(data.map(item => item.text));
-        });
+        });        
     }, []);
 
     return (
