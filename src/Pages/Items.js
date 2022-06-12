@@ -25,128 +25,23 @@ Tasks :
 import { useState, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
-const SERVER_URL = "https://abra-course-server.herokuapp.com/";
-
 const Items = (props) => {
 
-    const [accessToken, setAccessToken] = useState(() => localStorage.getItem("Token"));
-    const [items, setItems] = useState(undefined);
-
-
-    const getItems = async() => {
-        const response = await fetch(SERVER_URL + "items/",
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + accessToken
-            },
-            method: "GET"
-        })
-
-        if (response.status === 200) {
-            const data = await response.json();
-            setItems(data);
-        }
-
-    }
-
-    useEffect( () => {
-       console.log("here");
-
-        if (accessToken) {
-            getItems();
-        }
-
-        // const token = localStorage.getItem("Token");
-        // setAccessToken(token);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const [userData, setUserData] = useState(() => 
+        JSON.parse(localStorage.getItem("UserData")));
 
     useEffect( () => {
 
-
-    }, [accessToken]);
-
-    const login = async (username, password) => {
-        
-        const payload = {
-            username,
-            password
+        if (userData !== undefined)
+        {
+            console.log(userData);
+            localStorage.setItem("UserData", JSON.stringify(userData));
+        } else {
+            localStorage.removeItem("UserData");
         }
 
-        const response = await fetch(SERVER_URL + "api/token/",
-        {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify(payload)
-        })
+    }, [userData]);
 
-        const data = await response.json()
-
-        return data.access;
-    }
-
-    const register = async (username, password, email, firstName, lastName) =>
-    {
-        const payload = {
-            username: username,
-            password: password,
-            password2: password,
-            email: email,
-            first_name: firstName,
-            last_name: lastName 
-        };
-
-        try {
-
-            const response = await fetch(SERVER_URL + "register/",
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify(payload)
-            })
-
-            const data = await response.json();
-            console.log(data);
-        } catch(err) {
-            console.log(err);
-        }
-        
-    }
-
-
-    const createItem = async ( name ) => {
-
-        const payload = {
-            name
-        };
-        console.log(JSON.stringify(payload));
-        const response = await fetch(SERVER_URL + "items/",
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + accessToken
-            },
-            method: "POST",
-            body: JSON.stringify(payload)
-        })
-
-        const data = await response.json();
-
-        getItems();
-
-    }
-    const loginUser = async () => {
-        const accessToken = await login("test3","@Q1w2e3r4");
-        setAccessToken(accessToken);
-        localStorage.setItem("Token", accessToken);
-        console.log(accessToken);
-    }
     return (
         <div>
             <nav>
@@ -154,7 +49,8 @@ const Items = (props) => {
                 <Link to="/items/login">Login</Link>    
             </nav>   
             
-            <Outlet />                         
+            { userData && <p>Welcome {userData.userName} !</p>}
+            <Outlet context={[userData, setUserData]}/>                         
         </div>
     )
 }
