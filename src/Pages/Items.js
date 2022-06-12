@@ -150,7 +150,7 @@ const Items = (props) => {
     return (
         <div>
             <nav>
-                <Link to="items/register">Register</Link> | {" "}
+                <Link to="/items/register">Register</Link> | {" "}
                 <Link to="/items/login">Login</Link>    
             </nav>   
             

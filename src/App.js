@@ -7,6 +7,8 @@ import Exchange from './Pages/Exchange';
 import Items from './Pages/Items';
 
 import Register from './Components/Items/Register';
+import Login from './Components/Items/Login';
+
 function App(props) {
   
   return (
@@ -21,7 +23,6 @@ function App(props) {
         <Route path="/items" element={<Items />} >
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
-
         </Route>
 
         <Route path="*" element={<CatFacts />} />

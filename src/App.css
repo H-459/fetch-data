@@ -5,4 +5,11 @@
 nav {
   margin-top: 15px;
   padding-left: 15px;
+  margin-bottom: 15px;
+}
+
+.labels {
+  width: 130px;
+  display: inline-block;
+  padding-bottom: 10px;
 }
