@@ -23,15 +23,15 @@ Tasks :
 */
 
 import { useState, useEffect } from 'react';
+import { Link, Outlet } from 'react-router-dom';
 
 const SERVER_URL = "https://abra-course-server.herokuapp.com/";
 
 const Items = (props) => {
 
-    const [accessToken, setAccessToken] = useState(undefined);
+    const [accessToken, setAccessToken] = useState(() => localStorage.getItem("Token"));
     const [items, setItems] = useState(undefined);
 
-    console.log(items);
 
     const getItems = async() => {
         const response = await fetch(SERVER_URL + "items/",
@@ -51,16 +51,20 @@ const Items = (props) => {
     }
 
     useEffect( () => {
-        const token = localStorage.getItem("Token");
-        setAccessToken(token);
-
-    }, []);
-
-    useEffect( () => {
+       console.log("here");
 
         if (accessToken) {
             getItems();
         }
+
+        // const token = localStorage.getItem("Token");
+        // setAccessToken(token);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect( () => {
+
 
     }, [accessToken]);
 
@@ -144,21 +148,14 @@ const Items = (props) => {
         console.log(accessToken);
     }
     return (
-        <>
-        <button onClick={() => register("test3","@Q1w2e3r4","te3st@gmail.com","E","Z")}>Register</button>
-        <button onClick={loginUser}>Login</button>
-        <button onClick={getItems}>get Items</button>
-        <button onClick={() => createItem("My new item")}>Create item</button>
-        { accessToken && <p>Your acccess token : {accessToken}</p>}
-        { items && 
-            <>
-                <ul>
-                    {items.map(item => {
-                        return <li key={item.id}>{item.name}</li>
-                    })} 
-                </ul>
-            </>}
-        </>
+        <div>
+            <nav>
+                <Link to="items/register">Register</Link> | {" "}
+                <Link to="/items/login">Login</Link>    
+            </nav>   
+            
+            <Outlet />                         
+        </div>
     )
 }
 
