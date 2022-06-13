@@ -1,6 +1,45 @@
-const SERVER_URL = "https://abra-course-server.herokuapp.com/";
-const ITEMS_URL = "https://abra-course-server.herokuapp.com/items";
+const axios = require('axios').default;
 
+//const SERVER_URL = "https://abra-course-server.herokuapp.com/";
+
+const apiInstance = axios.create({
+    baseURL:"https://abra-course-server.herokuapp.com/",
+    headers:{
+        "Content-Type":"application/json",
+        "Access-Control-Allow-Origin": "true"
+    }
+
+});
+
+
+export const loginUser = async (username,password) => {
+
+    const response = await apiInstance.post('api/token/',{
+        username:username,
+        password:password
+    });
+    console.log("response");
+    return response;
+
+}
+
+export const registerUser = async (username, password, email, firstName, lastName) =>{
+
+    const response = await apiInstance.post('register/',{
+        username: username,
+        password: password,
+        password2: password,
+        email: email,
+        first_name: firstName,
+        last_name: lastName 
+
+    });
+    console.log("registerUser");
+    return response;
+}
+
+
+/*
 const apiCall = async (url, payload, method="GET") => {
 
     const response = await fetch(url,
@@ -25,6 +64,8 @@ const apiCall = async (url, payload, method="GET") => {
         }));
 
 }
+
+
 export const registerUser = async (username, password, email, firstName, lastName) =>
 {
     const payload = {
@@ -54,25 +95,4 @@ export const loginUser = async (username, password) => {
 
 }
 
-export const createItem = async ()=>{
-
-}
-
-export const delItem = async (postId) => {
-
-    const data = await apiCall(ITEMS_URL + postId, postId, "DELETE");
-
-
-
-}
-
-export const renameItem = async (postId, newName ) =>{
-
-    const payload = {
-        name:newName
-    }
-
-    const data = await apiCall(ITEMS_URL + postId, payload, "PATCH");
-
-
-}
+*/

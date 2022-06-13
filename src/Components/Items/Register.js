@@ -2,6 +2,10 @@ import { useRef } from "react";
 
 import { registerUser } from "../../Services/Api";
 
+import {useForm} from 'react-hook-form';
+
+const {register, handleSubmit} = useForm();
+
 const Register = () => {
     console.log("In render");
 
@@ -31,10 +35,10 @@ const Register = () => {
     return (
         <>
             <form>
-                <label className="labels">Username :</label><input ref={username} type="text"></input><br />
-                <label className="labels">Email :</label><input ref={email} type="email"></input><br />
-                <label className="labels">Password :</label><input ref={password} type="password"></input><br />
-                <label className="labels">Firstname :</label><input ref={firstName} type="text"></input><br />
+                <label className="labels">Username :</label><input {...register("username")} ref={username} type="text"></input><br />
+                <label className="labels">Email :</label><input {...register("email")} ref={email} type="email"></input><br />
+                <label className="labels">Password :</label><input {...register("password")} ref={password} type="password"></input><br />
+                <label className="labels">Firstname :</label><input {...register("firstName")} ref={firstName} type="text"></input><br />
                 <label className="labels">LastName :</label><input ref={lastName} type="text"></input><br />
                 <button onClick={Submit}>Submit</button>
             </form>
