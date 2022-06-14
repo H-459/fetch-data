@@ -1,5 +1,5 @@
 const SERVER_URL = "https://abra-course-server.herokuapp.com/";
-const ITEMS_URL = "https://abra-course-server.herokuapp.com/items";
+const ITEMS_URL = "https://abra-course-server.herokuapp.com/items/";
 
 const apiCall = async (url, payload, method="GET") => {
 

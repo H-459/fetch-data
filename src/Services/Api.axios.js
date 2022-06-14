@@ -1,6 +1,7 @@
 const axios = require('axios').default;
 
-//const SERVER_URL = "https://abra-course-server.herokuapp.com/";
+const SERVER_URL = "https://abra-course-server.herokuapp.com/";
+const ITEMS_URL = "https://abra-course-server.herokuapp.com/items/";
 
 const apiInstance = axios.create({
     baseURL:"https://abra-course-server.herokuapp.com/",
@@ -11,7 +12,49 @@ const apiInstance = axios.create({
 
 });
 
+export const loginUser = async (username,password) => {
 
+    const response = await axios.post(SERVER_URL +'api/token/',{
+        username:username,
+        password:password
+    });
+    console.log("response");
+    return response;
+
+}
+
+export const registerUser = async (username, password, email, firstName, lastName) =>{
+
+    const response = await axios.post(SERVER_URL +'api/token/',{
+        username:username,
+        password:password
+    });
+    console.log("response");
+    return response;
+}
+
+export const createItem = async ()=>{
+
+}
+
+export const delItem = async (postId) => {
+
+    const data = await axios.delete(ITEMS_URL + postId);
+
+
+
+}
+
+export const renameItem = async (postId, newName ) =>{
+
+    const data = await axios.patch(ITEMS_URL + postId,{
+    name:newName   
+    });
+
+
+}
+
+/*
 export const loginUser = async (username,password) => {
 
     const response = await apiInstance.post('api/token/',{
