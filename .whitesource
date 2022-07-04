@@ -1,13 +1,16 @@
 {
   "scanSettings": {
-    "configMode": "AUTO",
+    "configMode": "LOCAL",
     "configExternalURL": "",
     "projectToken": "",
-    "baseBranches": []
+    "baseBranches": ["dev","release"],
+    "enableLicenseViolations": "true"
+    
   },
   "checkRunSettings": {
     "vulnerableCheckRunConclusionLevel": "failure",
     "displayMode": "diff",
+    "licenseCheckRunConclusionLevel": "failure",
     "useMendCheckNames": true
   },
   "issueSettings": {
@@ -20,3 +23,5 @@
     }
   }
 }
+
+
